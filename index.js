@@ -2,9 +2,8 @@ const inquirer = require("inquirer");
 const fs = require('fs');
 const generateMarkdown = require("./generateMarkdown.js")
 
-// TODO: Create an array of questions for user input
 const questions = [
-    // Project name
+
     {
         type: 'input',
         name: 'title',
@@ -18,7 +17,7 @@ const questions = [
             }
         }
     },
-    // Description of project
+
     {
         type: 'input',
         name: 'description',
@@ -32,7 +31,7 @@ const questions = [
             }
         }
     },
-    // Installation Instructions
+
     {
         type: 'input',
         name: 'installation',
@@ -46,7 +45,7 @@ const questions = [
             }
         }
     },
-    // Usage Information
+
     {
         type: 'input',
         name: 'usage',
@@ -60,7 +59,7 @@ const questions = [
             }
         }
     },
-    // Contribution Guidlines
+
     {
         type: 'input',
         name: 'contribution',
@@ -74,7 +73,7 @@ const questions = [
             }
         }
     },
-    // Test Instructions 
+
     {
         type: 'input',
         name: 'testing',
@@ -88,7 +87,7 @@ const questions = [
             }
         }
     },
-    // License Options
+
     {
         type: 'checkbox',
         name: 'licensing',
@@ -103,7 +102,7 @@ const questions = [
             }
         }
     },
-    // Github Username
+
     {
         type: 'input',
         name: 'github',
@@ -117,7 +116,6 @@ const questions = [
             }
         }
     },
-    // Email Address
     {
         type: 'input',
         name: 'email',
@@ -125,11 +123,22 @@ const questions = [
     },
 ];
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
 
-// TODO: Create a function to initialize app
-function init() {}
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, (err) => {
+        if (err)
+            throw err;
+        console.log('Success! Information transferred to the README!')
+    });
+};
 
-// Function call to initialize app
+function init() {
+    inquirer.prompt(questions)
+    .then(function (userInput) {
+        console.log(userInput)
+        writeToFile("README.md", generateMarkdown(userInput));
+    });
+};
+
+
 init();
